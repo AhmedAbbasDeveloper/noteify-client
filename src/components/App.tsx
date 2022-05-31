@@ -9,7 +9,15 @@ import Header from "./Header"
 import Note from "./Note"
 
 function App() {
+  // const [userId, setUserId] = useState(window.localStorage.getItem("userId"))
+
+  // window.addEventListener('storage', () => {
+  //   setUserId(window.localStorage.getItem("userId"))
+  // })
+
+  // if (userId) {
   const { data } = useQuery(NOTES)
+  // const data = { notes: [{ id: "1", title: "yes", content: "no" }] }
 
   return (
     <div className="page">
@@ -47,6 +55,9 @@ function App() {
       <Footer />
     </div>
   )
+  // } else {
+  //   return <Login />
+  // }
 }
 
 export default App
