@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -17,18 +17,22 @@ import useAuthContext from '../hooks/useAuthContext';
 export default function SignUp() {
   const { dispatch } = useAuthContext();
 
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const signUpUser = async (user) => {
     try {
       const { data } = await apiClient.post('/users/sign-up', user);
       localStorage.setItem('noteify-auth', data.token);
       dispatch({ type: 'LOGIN', payload: data });
+      setErrorMessage(null);
     } catch (error) {
-      console.log(error);
+      setErrorMessage(error.response.data.message);
     }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     const data = new FormData(event.currentTarget);
     const user = {
       firstName: data.get('firstName'),
@@ -36,6 +40,12 @@ export default function SignUp() {
       email: data.get('email'),
       password: data.get('password'),
     };
+
+    if (!user.firstName || !user.lastName || !user.email || !user.password) {
+      setErrorMessage('Please fill out all fields');
+      return;
+    }
+
     await signUpUser(user);
   };
 
@@ -100,6 +110,13 @@ export default function SignUp() {
                 fullWidth
               />
             </Grid>
+            {errorMessage && (
+              <Grid item xs={12}>
+                <Typography color="error" variant="body2">
+                  {errorMessage}
+                </Typography>
+              </Grid>
+            )}
           </Grid>
 
           <Button

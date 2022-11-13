@@ -7,6 +7,7 @@ import Fab from '@mui/material/Fab';
 import Grid from '@mui/material/Grid';
 import InputBase from '@mui/material/InputBase';
 import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import Zoom from '@mui/material/Zoom';
 
 import apiClient from '../clients/api-client';
@@ -15,6 +16,8 @@ import useNotesContext from '../hooks/useNotesContext';
 
 export default function CreateArea() {
   const { dispatch } = useNotesContext();
+
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const [isExpanded, setExpanded] = useState(false);
 
@@ -41,16 +44,21 @@ export default function CreateArea() {
         title: '',
         content: '',
       });
+      setErrorMessage(null);
     } catch (error) {
-      console.log(error);
+      setErrorMessage(error.response.data.message);
     }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (note.title || note.content) {
-      await createNote(note);
+
+    if (!note.title && !note.content) {
+      setErrorMessage('Please add a title or content to your note.');
+      return;
     }
+
+    await createNote(note);
   };
   return (
     <Container component="main" maxWidth="sm">
@@ -62,6 +70,11 @@ export default function CreateArea() {
         }}
       >
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3, mb: 2 }}>
+          {errorMessage && (
+          <Typography color="error" variant="body2" align="center">
+            {errorMessage}
+          </Typography>
+          )}
           <Paper elevation={5} sx={{ p: 2, borderRadius: '7px' }}>
             <Grid container>
               <Zoom in={isExpanded}>
