@@ -16,7 +16,9 @@ export default function Notes() {
 
   const getNotes = async () => {
     try {
-      const { data } = await apiClient.get('/notes');
+      const { data } = await apiClient.get('/notes', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('noteify-auth')}` },
+      });
       dispatch({ type: 'GET_NOTES', payload: data });
     } catch (error) {
       console.log(error);

@@ -16,7 +16,9 @@ export default function Note({ id, title, content }) {
 
   const deleteNote = async () => {
     try {
-      const { data } = await apiClient.delete(`/notes/${id}`);
+      const { data } = await apiClient.delete(`/notes/${id}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('noteify-auth')}` },
+      });
       dispatch({ type: 'DELETE_NOTE', payload: data });
     } catch (error) {
       console.log(error);

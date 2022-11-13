@@ -33,7 +33,9 @@ export default function CreateArea() {
 
   const createNote = async () => {
     try {
-      const { data } = await apiClient.post('/notes', note);
+      const { data } = await apiClient.post('/notes', note, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('noteify-auth')}` },
+      });
       dispatch({ type: 'CREATE_NOTE', payload: data });
       setNote({
         title: '',
