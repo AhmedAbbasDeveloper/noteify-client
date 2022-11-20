@@ -14,16 +14,18 @@ import apiClient from '../clients/api-client';
 
 import useNotesContext from '../hooks/useNotesContext';
 
-export default function CreateArea() {
+export default function CreateArea({
+  id, title, content, onClose,
+}) {
   const { dispatch } = useNotesContext();
 
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const [isExpanded, setExpanded] = useState(false);
+  const [isExpanded, setExpanded] = useState(!!id);
 
   const [note, setNote] = useState({
-    title: '',
-    content: '',
+    title: title ?? '',
+    content: content ?? '',
   });
 
   const handleChange = (event) => {
@@ -50,6 +52,23 @@ export default function CreateArea() {
     }
   };
 
+  const updateNote = async () => {
+    try {
+      const { data } = await apiClient.patch(`/notes/${id}`, note, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('noteify-auth')}` },
+      });
+      dispatch({ type: 'UPDATE_NOTE', payload: data });
+      setNote({
+        title: '',
+        content: '',
+      });
+      setErrorMessage(null);
+      onClose();
+    } catch (error) {
+      setErrorMessage(error.response.data.message);
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -58,7 +77,11 @@ export default function CreateArea() {
       return;
     }
 
-    await createNote(note);
+    if (id) {
+      await updateNote();
+    } else {
+      await createNote(note);
+    }
   };
   return (
     <Container component="main" maxWidth="sm">
@@ -75,7 +98,7 @@ export default function CreateArea() {
             {errorMessage}
           </Typography>
           )}
-          <Paper elevation={5} sx={{ p: 2, borderRadius: '7px' }}>
+          <Paper elevation={id ? 0 : 5} sx={{ p: 2, borderRadius: '7px' }}>
             <Grid container>
               <Zoom in={isExpanded}>
                 <Grid item xs={12}>

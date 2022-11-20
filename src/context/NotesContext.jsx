@@ -12,6 +12,10 @@ const notesReducer = (state, action) => {
       return {
         notes: [...state.notes, action.payload],
       };
+    case 'UPDATE_NOTE':
+      return {
+        notes: state.notes.map((note) => (note._id === action.payload._id ? action.payload : note)),
+      };
     case 'DELETE_NOTE':
       return {
         notes: state.notes.filter((note) => note._id !== action.payload._id),
