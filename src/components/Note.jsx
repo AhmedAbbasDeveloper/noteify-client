@@ -13,19 +13,25 @@ import CreateArea from './CreateArea';
 
 import apiClient from '../clients/api-client';
 
+import useAuthContext from '../hooks/useAuthContext';
 import useNotesContext from '../hooks/useNotesContext';
 
 export default function Note({ id, title, content }) {
+  const { user } = useAuthContext();
   const { dispatch } = useNotesContext();
 
   const [open, setOpen] = useState(false);
 
   const deleteNote = async () => {
     try {
-      const { data } = await apiClient.delete(`/notes/${id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('noteify-auth')}` },
-      });
-      dispatch({ type: 'DELETE_NOTE', payload: data });
+      if (user) {
+        const { data } = await apiClient.delete(`/notes/${id}`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem('noteify-auth')}` },
+        });
+        dispatch({ type: 'DELETE_NOTE', payload: data });
+      } else {
+        dispatch({ type: 'DELETE_NOTE', payload: { _id: id } });
+      }
     } catch (error) {
       console.log(error);
     }

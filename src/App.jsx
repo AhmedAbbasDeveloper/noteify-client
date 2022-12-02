@@ -26,7 +26,7 @@ export default function App() {
       <CssBaseline />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={user ? <Notes /> : <Navigate to="/login" />} />
+          <Route path="/" element={<Notes />} />
           <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
           <Route path="/sign-up" element={!user ? <SignUp /> : <Navigate to="/" />} />
         </Routes>

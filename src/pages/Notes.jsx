@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+import Alert from '@mui/material/Alert';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 
@@ -9,17 +10,23 @@ import Note from '../components/Note';
 
 import apiClient from '../clients/api-client';
 
+import useAuthContext from '../hooks/useAuthContext';
 import useNotesContext from '../hooks/useNotesContext';
 
 export default function Notes() {
+  const { user } = useAuthContext();
   const { notes, dispatch } = useNotesContext();
 
   const getNotes = async () => {
     try {
-      const { data } = await apiClient.get('/notes', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('noteify-auth')}` },
-      });
-      dispatch({ type: 'GET_NOTES', payload: data });
+      if (user) {
+        const { data } = await apiClient.get('/notes', {
+          headers: { Authorization: `Bearer ${localStorage.getItem('noteify-auth')}` },
+        });
+        dispatch({ type: 'GET_NOTES', payload: data });
+      } else {
+        dispatch({ type: 'GET_NOTES', payload: [] });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -27,11 +34,16 @@ export default function Notes() {
 
   useEffect(() => {
     getNotes();
-  }, []);
+  }, [user]);
 
   return (
     <>
       <Header />
+      {!user && (
+      <Alert severity="info" variant="filled" sx={{ mt: -1 }}>
+        You are not logged in. You can still create notes, but they will not be saved.
+      </Alert>
+      )}
       <CreateArea />
       <Container maxWidth="xl">
         <Grid container spacing={4} sx={{ pl: 3, pr: 3 }}>

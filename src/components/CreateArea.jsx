@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import uuid from 'react-uuid';
+
 import AddIcon from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -12,11 +14,13 @@ import Zoom from '@mui/material/Zoom';
 
 import apiClient from '../clients/api-client';
 
+import useAuthContext from '../hooks/useAuthContext';
 import useNotesContext from '../hooks/useNotesContext';
 
 export default function CreateArea({
   id, title, content, onClose,
 }) {
+  const { user } = useAuthContext();
   const { dispatch } = useNotesContext();
 
   const [errorMessage, setErrorMessage] = useState(null);
@@ -38,10 +42,14 @@ export default function CreateArea({
 
   const createNote = async () => {
     try {
-      const { data } = await apiClient.post('/notes', note, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('noteify-auth')}` },
-      });
-      dispatch({ type: 'CREATE_NOTE', payload: data });
+      if (user) {
+        const { data } = await apiClient.post('/notes', note, {
+          headers: { Authorization: `Bearer ${localStorage.getItem('noteify-auth')}` },
+        });
+        dispatch({ type: 'CREATE_NOTE', payload: data });
+      } else {
+        dispatch({ type: 'CREATE_NOTE', payload: { _id: uuid(), ...note } });
+      }
       setNote({
         title: '',
         content: '',
@@ -54,10 +62,14 @@ export default function CreateArea({
 
   const updateNote = async () => {
     try {
-      const { data } = await apiClient.patch(`/notes/${id}`, note, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('noteify-auth')}` },
-      });
-      dispatch({ type: 'UPDATE_NOTE', payload: data });
+      if (user) {
+        const { data } = await apiClient.patch(`/notes/${id}`, note, {
+          headers: { Authorization: `Bearer ${localStorage.getItem('noteify-auth')}` },
+        });
+        dispatch({ type: 'UPDATE_NOTE', payload: data });
+      } else {
+        dispatch({ type: 'UPDATE_NOTE', payload: { _id: id, ...note } });
+      }
       setNote({
         title: '',
         content: '',
@@ -83,6 +95,7 @@ export default function CreateArea({
       await createNote(note);
     }
   };
+
   return (
     <Container component="main" maxWidth="sm">
       <Box
