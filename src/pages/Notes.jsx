@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Alert from '@mui/material/Alert';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 
 import CreateArea from '../components/CreateArea';
+import ErrorToast from '../components/ErrorToast';
 import Header from '../components/Header';
 import Note from '../components/Note';
 
@@ -17,6 +18,8 @@ export default function Notes() {
   const { user } = useAuthContext();
   const { notes, dispatch } = useNotesContext();
 
+  const [openErrorToast, setOpenErrorToast] = useState(false);
+
   const getNotes = async () => {
     try {
       if (user) {
@@ -28,7 +31,7 @@ export default function Notes() {
         dispatch({ type: 'GET_NOTES', payload: [] });
       }
     } catch (error) {
-      console.log(error);
+      setOpenErrorToast(true);
     }
   };
 
@@ -54,6 +57,12 @@ export default function Notes() {
           ))}
         </Grid>
       </Container>
+
+      <ErrorToast
+        message="Unable to get notes. Please try again later."
+        open={openErrorToast}
+        onClose={() => setOpenErrorToast(false)}
+      />
     </>
   );
 }

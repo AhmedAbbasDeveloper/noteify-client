@@ -10,6 +10,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import Typography from '@mui/material/Typography';
 
 import CreateArea from './CreateArea';
+import ErrorToast from './ErrorToast';
 
 import apiClient from '../clients/api-client';
 
@@ -20,7 +21,8 @@ export default function Note({ id, title, content }) {
   const { user } = useAuthContext();
   const { dispatch } = useNotesContext();
 
-  const [open, setOpen] = useState(false);
+  const [openEditor, setOpenEditor] = useState(false);
+  const [openErrorToast, setOpenErrorToast] = useState(false);
 
   const deleteNote = async () => {
     try {
@@ -33,7 +35,7 @@ export default function Note({ id, title, content }) {
         dispatch({ type: 'DELETE_NOTE', payload: { _id: id } });
       }
     } catch (error) {
-      console.log(error);
+      setOpenErrorToast(true);
     }
   };
 
@@ -53,14 +55,20 @@ export default function Note({ id, title, content }) {
           </Typography>
         </CardContent>
         <CardActions sx={{ justifyContent: 'right', mt: -3 }}>
-          <Button size="small" onClick={() => setOpen(true)} sx={{ mr: -4 }}><EditIcon /></Button>
+          <Button size="small" onClick={() => setOpenEditor(true)} sx={{ mr: -4 }}><EditIcon /></Button>
           <Button size="small" onClick={deleteNote} sx={{ ml: -4, mr: -2 }}><DeleteIcon /></Button>
         </CardActions>
       </Card>
 
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <CreateArea id={id} title={title} content={content} onClose={() => setOpen(false)} />
+      <Dialog open={openEditor} onClose={() => setOpenEditor(false)}>
+        <CreateArea id={id} title={title} content={content} onClose={() => setOpenEditor(false)} />
       </Dialog>
+
+      <ErrorToast
+        message="Unable to delete note. Please try again later."
+        open={openErrorToast}
+        onClose={() => setOpenErrorToast(false)}
+      />
     </>
   );
 }
