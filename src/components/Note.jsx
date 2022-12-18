@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
+import {
+  Button, Card, CardActions, CardContent, Dialog, Typography,
+} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Dialog from '@mui/material/Dialog';
 import EditIcon from '@mui/icons-material/Edit';
-import Typography from '@mui/material/Typography';
 
 import CreateArea from './CreateArea';
 import ErrorToast from './ErrorToast';
@@ -26,14 +23,12 @@ export default function Note({ id, title, content }) {
 
   const deleteNote = async () => {
     try {
-      if (user) {
-        const { data } = await apiClient.delete(`/notes/${id}`, {
+      const { data } = user
+        ? await apiClient.delete(`/notes/${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('noteify-auth')}` },
-        });
-        dispatch({ type: 'DELETE_NOTE', payload: data });
-      } else {
-        dispatch({ type: 'DELETE_NOTE', payload: { _id: id } });
-      }
+        })
+        : { data: { _id: id } };
+      dispatch({ type: 'DELETE_NOTE', payload: data });
     } catch (error) {
       setOpenErrorToast(true);
     }
@@ -60,7 +55,7 @@ export default function Note({ id, title, content }) {
         </CardActions>
       </Card>
 
-      <Dialog open={openEditor} onClose={() => setOpenEditor(false)}>
+      <Dialog open={openEditor}>
         <CreateArea id={id} title={title} content={content} onClose={() => setOpenEditor(false)} />
       </Dialog>
 

@@ -1,16 +1,9 @@
 import React, { useState } from 'react';
 
-import uuid from 'react-uuid';
-
 import AddIcon from '@mui/icons-material/Add';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Fab from '@mui/material/Fab';
-import Grid from '@mui/material/Grid';
-import InputBase from '@mui/material/InputBase';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import Zoom from '@mui/material/Zoom';
+import {
+  Box, Container, Fab, Grid, InputBase, Paper, Typography, Zoom,
+} from '@mui/material';
 
 import apiClient from '../clients/api-client';
 
@@ -24,9 +17,7 @@ export default function CreateArea({
   const { dispatch } = useNotesContext();
 
   const [errorMessage, setErrorMessage] = useState(null);
-
   const [isExpanded, setExpanded] = useState(!!id);
-
   const [note, setNote] = useState({
     title: title ?? '',
     content: content ?? '',
@@ -42,14 +33,12 @@ export default function CreateArea({
 
   const createNote = async () => {
     try {
-      if (user) {
-        const { data } = await apiClient.post('/notes', note, {
+      const { data } = user
+        ? await apiClient.post('/notes', note, {
           headers: { Authorization: `Bearer ${localStorage.getItem('noteify-auth')}` },
-        });
-        dispatch({ type: 'CREATE_NOTE', payload: data });
-      } else {
-        dispatch({ type: 'CREATE_NOTE', payload: { _id: uuid(), ...note } });
-      }
+        })
+        : { data: { _id: crypto.randomUUID(), ...note } };
+      dispatch({ type: 'CREATE_NOTE', payload: data });
       setNote({
         title: '',
         content: '',
@@ -62,14 +51,12 @@ export default function CreateArea({
 
   const updateNote = async () => {
     try {
-      if (user) {
-        const { data } = await apiClient.patch(`/notes/${id}`, note, {
+      const { data } = user
+        ? await apiClient.patch(`/notes/${id}`, note, {
           headers: { Authorization: `Bearer ${localStorage.getItem('noteify-auth')}` },
-        });
-        dispatch({ type: 'UPDATE_NOTE', payload: data });
-      } else {
-        dispatch({ type: 'UPDATE_NOTE', payload: { _id: id, ...note } });
-      }
+        })
+        : { data: { _id: id, ...note } };
+      dispatch({ type: 'UPDATE_NOTE', payload: data });
       setNote({
         title: '',
         content: '',
@@ -92,7 +79,7 @@ export default function CreateArea({
     if (id) {
       await updateNote();
     } else {
-      await createNote(note);
+      await createNote();
     }
   };
 

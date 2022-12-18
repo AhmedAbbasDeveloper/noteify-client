@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 
-import Avatar from '@mui/material/Avatar';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
+import {
+  Avatar, Box, Button, Container, Link, TextField, Typography,
+} from '@mui/material';
 import HighlightIcon from '@mui/icons-material/Highlight';
-import Link from '@mui/material/Link';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 
 import apiClient from '../clients/api-client';
 
