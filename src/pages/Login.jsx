@@ -16,12 +16,12 @@ export default function Login() {
 
   const loginUser = async (user) => {
     try {
-      const { data } = await apiClient.post('/users/login', user);
-      localStorage.setItem('noteify-auth', data.token);
+      const { data } = await apiClient.post('/auth/login', user);
+      localStorage.setItem('noteify-auth', data.access_token);
       dispatch({ type: 'LOGIN', payload: data });
       setErrorMessage(null);
     } catch (error) {
-      setErrorMessage(error.response.data.message);
+      setErrorMessage('Invalid credentials');
     }
   };
 
@@ -57,7 +57,7 @@ export default function Login() {
         </Avatar>
 
         <Typography component="h1" variant="h5">
-          Sign in
+          Login
         </Typography>
 
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
@@ -92,12 +92,12 @@ export default function Login() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign In
+            Login
           </Button>
 
-          <Link href="/sign-up">
+          <Link href="/register">
             <Typography variant="body2" align="center">
-              Don&#39;t have an account? Sign Up
+              Don&#39;t have an account? Register
             </Typography>
           </Link>
         </Box>

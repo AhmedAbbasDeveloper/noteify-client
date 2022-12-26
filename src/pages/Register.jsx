@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { isStrongPassword } from 'validator';
+
 import {
   Avatar, Box, Button, Container, Grid, Link, TextField, Typography,
 } from '@mui/material';
@@ -9,15 +11,15 @@ import apiClient from '../clients/api-client';
 
 import useAuthContext from '../hooks/useAuthContext';
 
-export default function SignUp() {
+export default function Register() {
   const { dispatch } = useAuthContext();
 
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const signUpUser = async (user) => {
+  const registerUser = async (user) => {
     try {
-      const { data } = await apiClient.post('/users/sign-up', user);
-      localStorage.setItem('noteify-auth', data.token);
+      const { data } = await apiClient.post('/auth/register', user);
+      localStorage.setItem('noteify-auth', data.access_token);
       dispatch({ type: 'LOGIN', payload: data });
       setErrorMessage(null);
     } catch (error) {
@@ -41,7 +43,12 @@ export default function SignUp() {
       return;
     }
 
-    await signUpUser(user);
+    if (!isStrongPassword(user.password)) {
+      setErrorMessage('Password must be at least 8 characters long and contain at least one uppercase letter, lowercase letter, number and symbol');
+      return;
+    }
+
+    await registerUser(user);
   };
 
   return (
@@ -59,7 +66,7 @@ export default function SignUp() {
         </Avatar>
 
         <Typography component="h1" variant="h5">
-          Sign up
+          Register
         </Typography>
 
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
@@ -120,12 +127,12 @@ export default function SignUp() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign Up
+            Register
           </Button>
 
           <Link href="/login">
             <Typography variant="body2" align="center">
-              Already have an account? Sign in
+              Already have an account? Login
             </Typography>
           </Link>
         </Box>

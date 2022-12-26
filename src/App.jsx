@@ -9,7 +9,7 @@ import { ThemeProvider } from '@mui/material/styles';
 
 import Notes from './pages/Notes';
 import Login from './pages/Login';
-import SignUp from './pages/SignUp';
+import Register from './pages/Register';
 
 import Footer from './components/Footer';
 
@@ -28,7 +28,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Notes />} />
           <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
-          <Route path="/sign-up" element={!user ? <SignUp /> : <Navigate to="/" />} />
+          <Route path="/register" element={!user ? <Register /> : <Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
       <Footer />
