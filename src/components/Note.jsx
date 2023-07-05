@@ -27,7 +27,7 @@ export default function Note({ id, title, content }) {
         ? await apiClient.delete(`/notes/${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('noteify-auth')}` },
         })
-        : { data: { _id: id } };
+        : { data: { id } };
       dispatch({ type: 'DELETE_NOTE', payload: data });
     } catch (error) {
       setOpenErrorToast(true);

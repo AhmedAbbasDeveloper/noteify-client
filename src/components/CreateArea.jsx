@@ -37,7 +37,7 @@ export default function CreateArea({
         ? await apiClient.post('/notes', note, {
           headers: { Authorization: `Bearer ${localStorage.getItem('noteify-auth')}` },
         })
-        : { data: { _id: crypto.randomUUID(), ...note } };
+        : { data: { id: crypto.randomUUID(), ...note } };
       dispatch({ type: 'CREATE_NOTE', payload: data });
       setNote({
         title: '',
@@ -55,7 +55,7 @@ export default function CreateArea({
         ? await apiClient.patch(`/notes/${id}`, note, {
           headers: { Authorization: `Bearer ${localStorage.getItem('noteify-auth')}` },
         })
-        : { data: { _id: id, ...note } };
+        : { data: { id, ...note } };
       dispatch({ type: 'UPDATE_NOTE', payload: data });
       setNote({
         title: '',

@@ -48,9 +48,9 @@ export default function Notes() {
       <CreateArea />
       <Container maxWidth="xl">
         <Grid container spacing={4} sx={{ pl: 3, pr: 3 }}>
-          {notes?.map(({ _id, title, content }) => (
-            <Grid item key={_id} xs={12} sm={6} md={4} lg={3}>
-              <Note id={_id} title={title} content={content} />
+          {notes?.map(({ id, title, content }) => (
+            <Grid item key={id} xs={12} sm={6} md={4} lg={3}>
+              <Note id={id} title={title} content={content} />
             </Grid>
           ))}
         </Grid>
