@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
+import HighlightIcon from '@mui/icons-material/Highlight';
 import {
   Avatar, Box, Button, Container, Link, TextField, Typography,
 } from '@mui/material';
-import HighlightIcon from '@mui/icons-material/Highlight';
 
 import apiClient from '../clients/api-client';
 
@@ -46,13 +46,13 @@ export default function Login() {
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          mt: 8,
+          alignItems: 'center',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
+          mt: 8,
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+        <Avatar sx={{ bgcolor: 'primary.main', m: 1 }}>
           <HighlightIcon />
         </Avatar>
 
@@ -67,9 +67,9 @@ export default function Login() {
             label="Email Address"
             autoComplete="email"
             required
-            autoFocus
             fullWidth
             margin="normal"
+            autoFocus
           />
           <TextField
             name="password"
@@ -80,6 +80,7 @@ export default function Login() {
             fullWidth
             margin="normal"
           />
+
           {errorMessage && (
           <Typography color="error" variant="body2">
             {errorMessage}
@@ -88,8 +89,8 @@ export default function Login() {
 
           <Button
             type="submit"
-            fullWidth
             variant="contained"
+            fullWidth
             sx={{ mt: 3, mb: 2 }}
           >
             Login

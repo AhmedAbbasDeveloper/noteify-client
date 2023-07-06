@@ -2,10 +2,10 @@ import React from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
+import HighlightIcon from '@mui/icons-material/Highlight';
 import {
   AppBar, Box, Button, Toolbar, Typography,
 } from '@mui/material';
-import HighlightIcon from '@mui/icons-material/Highlight';
 
 import useAuthContext from '../hooks/useAuthContext';
 
@@ -23,14 +23,16 @@ export default function Header() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, pb: 1.25 }}>
+    <Box sx={{ pb: 1.25 }}>
       <AppBar position="relative" sx={{ p: 1.4 }}>
         <Toolbar>
           <HighlightIcon />
-          <Typography variant="h4" component="div" sx={{ flexGrow: 1 }} fontFamily="Mclaren">
+
+          <Typography variant="h4" fontFamily="Mclaren" sx={{ flexGrow: 1 }}>
             Noteify
           </Typography>
-          <Button color="inherit" onClick={handleClick} sx={{ ml: 2 }}>{user ? 'Logout' : 'Login'}</Button>
+
+          <Button onClick={handleClick} color="inherit" sx={{ ml: 2 }}>{user ? 'Logout' : 'Login'}</Button>
         </Toolbar>
       </AppBar>
     </Box>

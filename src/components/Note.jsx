@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-import {
-  Button, Card, CardActions, CardContent, Dialog, Typography,
-} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import {
+  Card, CardActions, CardContent, Dialog, IconButton, Typography,
+} from '@mui/material';
 
 import CreateArea from './CreateArea';
 import ErrorToast from './ErrorToast';
@@ -38,20 +38,22 @@ export default function Note({ id, title, content }) {
     <>
       <Card
         sx={{
-          height: '100%', display: 'flex', flexDirection: 'column', borderRadius: '7px',
+          borderRadius: '7px', display: 'flex', flexDirection: 'column',
         }}
       >
         <CardContent sx={{ flexGrow: 1 }}>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography component="h2" variant="h5" gutterBottom>
             {title}
           </Typography>
+
           <Typography>
             {content}
           </Typography>
         </CardContent>
+
         <CardActions sx={{ justifyContent: 'right', mt: -3 }}>
-          <Button size="small" onClick={() => setOpenEditor(true)} sx={{ mr: -4 }}><EditIcon /></Button>
-          <Button size="small" onClick={deleteNote} sx={{ ml: -4, mr: -2 }}><DeleteIcon /></Button>
+          <IconButton onClick={() => setOpenEditor(true)} color="primary"><EditIcon /></IconButton>
+          <IconButton onClick={deleteNote} color="primary"><DeleteIcon /></IconButton>
         </CardActions>
       </Card>
 

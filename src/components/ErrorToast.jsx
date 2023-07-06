@@ -6,9 +6,9 @@ import { IconButton, Snackbar } from '@mui/material';
 export default function ErrorToast({ message, open, onClose }) {
   const action = (
     <IconButton
+      onClick={onClose}
       size="small"
       color="inherit"
-      onClick={onClose}
     >
       <CloseIcon fontSize="small" />
     </IconButton>
@@ -16,11 +16,11 @@ export default function ErrorToast({ message, open, onClose }) {
 
   return (
     <Snackbar
-      open={open}
-      autoHideDuration={5000}
-      onClose={onClose}
-      message={message}
       action={action}
+      message={message}
+      open={open}
+      onClose={onClose}
+      autoHideDuration={5000}
     />
   );
 }

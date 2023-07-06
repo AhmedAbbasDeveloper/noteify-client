@@ -46,6 +46,7 @@ export default function Notes() {
       )}
 
       <CreateArea />
+
       <Container maxWidth="xl">
         <Grid container spacing={4} sx={{ pl: 3, pr: 3 }}>
           {notes?.map(({ id, title, content }) => (

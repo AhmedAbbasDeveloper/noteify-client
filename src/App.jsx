@@ -1,17 +1,18 @@
 import React from 'react';
-
 import {
   BrowserRouter, Navigate, Route, Routes,
 } from 'react-router-dom';
 
-import CssBaseline from '@mui/material/CssBaseline';
+import { Box, CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 
-import Notes from './pages/Notes';
 import Login from './pages/Login';
+import Notes from './pages/Notes';
 import Register from './pages/Register';
 
 import Footer from './components/Footer';
+
+import { NotesContextProvider } from './context/NotesContext';
 
 import useAuthContext from './hooks/useAuthContext';
 
@@ -23,15 +24,25 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Notes />} />
-          <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
-          <Route path="/register" element={!user ? <Register /> : <Navigate to="/" />} />
-        </Routes>
-      </BrowserRouter>
-      <Footer />
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh',
+        }}
+      >
+        <CssBaseline />
+
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<NotesContextProvider><Notes /></NotesContextProvider>} />
+            <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
+            <Route path="/register" element={!user ? <Register /> : <Navigate to="/" />} />
+          </Routes>
+        </BrowserRouter>
+
+        <Footer />
+      </Box>
     </ThemeProvider>
   );
 }

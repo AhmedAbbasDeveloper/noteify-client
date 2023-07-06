@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
-import { isStrongPassword } from 'validator';
-
+import HighlightIcon from '@mui/icons-material/Highlight';
 import {
   Avatar, Box, Button, Container, Grid, Link, TextField, Typography,
 } from '@mui/material';
-import HighlightIcon from '@mui/icons-material/Highlight';
+
+import { isStrongPassword } from 'validator';
 
 import apiClient from '../clients/api-client';
 
@@ -55,13 +55,13 @@ export default function Register() {
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          mt: 8,
+          alignItems: 'center',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
+          mt: 8,
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+        <Avatar sx={{ bgcolor: 'primary.main', m: 1 }}>
           <HighlightIcon />
         </Avatar>
 
@@ -78,8 +78,8 @@ export default function Register() {
                 label="First Name"
                 autoComplete="given-name"
                 required
-                autoFocus
                 fullWidth
+                autoFocus
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -94,12 +94,12 @@ export default function Register() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                name="email"
+                type="email"
+                label="Email Address"
+                autoComplete="email"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
               />
             </Grid>
             <Grid item xs={12}>
@@ -112,6 +112,7 @@ export default function Register() {
                 fullWidth
               />
             </Grid>
+
             {errorMessage && (
               <Grid item xs={12}>
                 <Typography color="error" variant="body2">
@@ -123,8 +124,8 @@ export default function Register() {
 
           <Button
             type="submit"
-            fullWidth
             variant="contained"
+            fullWidth
             sx={{ mt: 3, mb: 2 }}
           >
             Register

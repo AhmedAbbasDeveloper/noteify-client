@@ -1,13 +1,21 @@
 import React from 'react';
 
-import { Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 
 export default function Footer() {
   return (
-    <Typography variant="body1" color="#ccc" fontWeight={500} align="center" sx={{ pt: 4, pb: 4 }}>
-      {'Copyright © '}
-      {new Date().getFullYear()}
-      {' Ahmed Abbas'}
-    </Typography>
+    <Box
+      component="footer"
+      sx={{
+        py: 4,
+        mt: 'auto',
+      }}
+    >
+      <Container maxWidth="sm">
+        <Typography variant="body1" color="#ccc" fontWeight={500} align="center">
+          {`Copyright © ${new Date().getFullYear()} Ahmed Abbas`}
+        </Typography>
+      </Container>
+    </Box>
   );
 }
