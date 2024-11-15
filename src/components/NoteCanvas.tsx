@@ -54,7 +54,9 @@ export const NoteCanvas = ({
     }
   };
 
-  const handleCloseErrorAlert = useCallback(() => setNoteError(''), []);
+  const handleCloseErrorAlert = useCallback(() => {
+    setNoteError('');
+  }, []);
 
   return (
     <Container component="main" maxWidth="sm">

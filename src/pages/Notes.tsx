@@ -26,7 +26,9 @@ export const Notes = () => {
     loadNotes();
   }, [loadNotes]);
 
-  const handleCloseErrorAlert = useCallback(() => setNotesError(''), []);
+  const handleCloseErrorAlert = useCallback(() => {
+    setNotesError('');
+  }, []);
 
   return (
     <>

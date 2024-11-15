@@ -15,10 +15,10 @@ import { isEmail } from 'validator';
 import { useAuth } from '@/hooks/useAuth';
 import { LoginInput } from '@/types';
 
-type ValidationErrors = {
+interface ValidationErrors {
   email: string;
   password: string;
-};
+}
 
 export const Login = () => {
   const navigate = useNavigate();

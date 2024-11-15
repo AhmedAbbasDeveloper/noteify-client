@@ -38,7 +38,9 @@ export const Note = ({ id, title, content }: { id: string } & NoteInput) => {
     }
   };
 
-  const handleCloseErrorAlert = useCallback(() => setNoteError(''), []);
+  const handleCloseErrorAlert = useCallback(() => {
+    setNoteError('');
+  }, []);
 
   useEffect(() => {
     if (!isWriting) {

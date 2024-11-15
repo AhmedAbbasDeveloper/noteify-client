@@ -173,9 +173,13 @@ export const NotesProvider: FC<{ children: ReactNode }> = ({ children }) => {
     [isAuthenticated, state.notes],
   );
 
-  const startWrite = () => dispatch({ type: 'START_WRITE' });
+  const startWrite = () => {
+    dispatch({ type: 'START_WRITE' });
+  };
 
-  const completeWrite = () => dispatch({ type: 'COMPLETE_WRITE' });
+  const completeWrite = () => {
+    dispatch({ type: 'COMPLETE_WRITE' });
+  };
 
   return (
     <NotesContext.Provider

@@ -16,12 +16,12 @@ import { isEmail, isStrongPassword } from 'validator';
 import { useAuth } from '@/hooks/useAuth';
 import { RegisterInput } from '@/types';
 
-type ValidationErrors = {
+interface ValidationErrors {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-};
+}
 
 export const Register = () => {
   const navigate = useNavigate();
