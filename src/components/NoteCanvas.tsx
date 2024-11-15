@@ -8,7 +8,7 @@ import {
   Paper,
   Zoom,
 } from '@mui/material';
-import { FormEvent, useCallback, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useRef, useState } from 'react';
 
 import { ErrorAlert } from '@/components/ErrorAlert';
 import { useNotes } from '@/hooks/useNotes';
@@ -24,6 +24,8 @@ export const NoteCanvas = ({
 
   const [formValues, setFormValues] = useState<NoteInput>({ title, content });
   const [noteError, setNoteError] = useState<string>('');
+
+  const titleRef = useRef<HTMLInputElement | null>(null);
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -54,6 +56,12 @@ export const NoteCanvas = ({
     }
   };
 
+  useEffect(() => {
+    if (isWriting) {
+      titleRef.current?.focus();
+    }
+  }, [isWriting]);
+
   const handleCloseErrorAlert = useCallback(() => {
     setNoteError('');
   }, []);
@@ -80,6 +88,7 @@ export const NoteCanvas = ({
                     type="text"
                     value={formValues.title}
                     onChange={handleChange}
+                    inputRef={titleRef}
                     placeholder="Title"
                     fullWidth
                     sx={{ fontSize: '1.2rem', fontWeight: 500 }}

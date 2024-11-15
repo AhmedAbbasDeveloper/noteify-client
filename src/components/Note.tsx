@@ -38,15 +38,15 @@ export const Note = ({ id, title, content }: { id: string } & NoteInput) => {
     }
   };
 
-  const handleCloseErrorAlert = useCallback(() => {
-    setNoteError('');
-  }, []);
-
   useEffect(() => {
     if (!isWriting) {
       setIsEditorOpen(false);
     }
   }, [isWriting]);
+
+  const handleCloseErrorAlert = useCallback(() => {
+    setNoteError('');
+  }, []);
 
   return (
     <Card sx={{ borderRadius: 2, display: 'flex', flexDirection: 'column' }}>
