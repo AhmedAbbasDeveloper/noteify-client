@@ -5,7 +5,7 @@ import {
   Button,
   Container,
   FormControl,
-  Grid,
+  Grid2 as Grid,
   TextField,
   Typography,
 } from '@mui/material';
@@ -99,7 +99,7 @@ export const Register = () => {
 
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <FormControl fullWidth>
                 <TextField
                   id="firstName"
@@ -118,7 +118,7 @@ export const Register = () => {
               </FormControl>
             </Grid>
 
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <FormControl fullWidth>
                 <TextField
                   id="lastName"
@@ -136,7 +136,7 @@ export const Register = () => {
               </FormControl>
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <FormControl fullWidth>
                 <TextField
                   id="email"
@@ -154,7 +154,7 @@ export const Register = () => {
               </FormControl>
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <FormControl fullWidth>
                 <TextField
                   id="password"

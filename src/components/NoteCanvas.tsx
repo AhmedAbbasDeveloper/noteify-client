@@ -3,7 +3,7 @@ import {
   Box,
   Container,
   Fab,
-  Grid,
+  Grid2 as Grid,
   InputBase,
   Paper,
   Zoom,
@@ -81,7 +81,7 @@ export const NoteCanvas = ({
           <Paper elevation={id ? 0 : 5} sx={{ borderRadius: 2, p: 2 }}>
             <Grid container>
               <Zoom in={isWriting}>
-                <Grid item xs={12}>
+                <Grid size={{ xs: 12 }}>
                   <InputBase
                     id="title"
                     name="title"
@@ -96,7 +96,7 @@ export const NoteCanvas = ({
                 </Grid>
               </Zoom>
 
-              <Grid item xs={12} sx={{ mt: isWriting ? 0 : -4.5 }}>
+              <Grid size={{ xs: 12 }} sx={{ mt: isWriting ? 0 : -4.5 }}>
                 <InputBase
                   id="content"
                   name="content"

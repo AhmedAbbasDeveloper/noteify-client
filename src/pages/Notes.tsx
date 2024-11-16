@@ -1,4 +1,4 @@
-import { Alert, Container, Grid } from '@mui/material';
+import { Alert, Container, Grid2 as Grid } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 
 import { ErrorAlert } from '@/components/ErrorAlert';
@@ -46,7 +46,7 @@ export const Notes = () => {
       <Container maxWidth="xl">
         <Grid container spacing={4} sx={{ pl: 3, pr: 3 }}>
           {notes.map(({ id, title, content }) => (
-            <Grid item key={id} xs={12} sm={6} md={4} lg={3}>
+            <Grid key={id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
               <Note id={id} title={title} content={content} />
             </Grid>
           ))}
