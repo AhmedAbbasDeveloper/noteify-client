@@ -1,8 +1,9 @@
 import { jwtDecode } from 'jwt-decode';
-import { createContext, FC, ReactNode, useEffect, useReducer } from 'react';
+import { FC, ReactNode, useEffect, useReducer } from 'react';
 
 import { api } from '@/api';
-import { LoginInput, RegisterInput } from '@/types';
+import { AuthState, DecodedToken, LoginInput, RegisterInput } from '@/types';
+import { AuthContext } from './AuthContext';
 
 const LOCAL_STORAGE_KEY = 'noteify-auth';
 
@@ -10,29 +11,7 @@ interface AuthResponse {
   access_token: string;
 }
 
-interface DecodedToken {
-  sub: string;
-  email: string;
-  iat: number;
-  exp: number;
-}
-
-interface AuthState {
-  isAuthenticated: boolean;
-  user: DecodedToken | null;
-}
-
 type AuthAction = { type: 'LOGIN'; payload: DecodedToken } | { type: 'LOGOUT' };
-
-interface AuthContextType extends AuthState {
-  register: (credentials: RegisterInput) => Promise<void>;
-  login: (credentials: LoginInput) => Promise<void>;
-  logout: () => void;
-}
-
-export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined,
-);
 
 const authReducer = (state: AuthState, action: AuthAction): AuthState => {
   switch (action.type) {

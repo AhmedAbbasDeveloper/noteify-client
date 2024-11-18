@@ -1,14 +1,10 @@
 import { ObjectId } from 'bson';
-import { createContext, FC, ReactNode, useCallback, useReducer } from 'react';
+import { FC, ReactNode, useCallback, useReducer } from 'react';
 
 import { api } from '@/api';
 import { useAuth } from '@/hooks/useAuth';
-import { Note, NoteInput } from '@/types';
-
-interface NotesState {
-  notes: Note[];
-  isWriting: boolean;
-}
+import { Note, NoteInput, NotesState } from '@/types';
+import { NotesContext } from './NotesContext';
 
 type NotesAction =
   | { type: 'SET_NOTES'; payload: Note[] }
@@ -17,19 +13,6 @@ type NotesAction =
   | { type: 'DELETE_NOTE'; payload: { id: string } }
   | { type: 'START_WRITE' }
   | { type: 'COMPLETE_WRITE' };
-
-interface NotesContextType extends NotesState {
-  fetchNotes: () => Promise<void>;
-  createNote: (note: NoteInput) => Promise<void>;
-  updateNote: (id: string, note: NoteInput) => Promise<void>;
-  deleteNote: (id: string) => Promise<void>;
-  startWrite: () => void;
-  completeWrite: () => void;
-}
-
-export const NotesContext = createContext<NotesContextType | undefined>(
-  undefined,
-);
 
 const notesReducer = (state: NotesState, action: NotesAction): NotesState => {
   switch (action.type) {

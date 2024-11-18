@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import { Footer } from '@/components/Footer';
-import { NotesProvider } from '@/context/NotesContext';
+import { NotesProvider } from '@/context/notes/NotesProvider';
 import { useAuth } from '@/hooks/useAuth';
 import { Login } from '@/pages/Login';
 import { Notes } from '@/pages/Notes';
