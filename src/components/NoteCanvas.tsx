@@ -77,7 +77,11 @@ export const NoteCanvas = ({
           mb: 2,
         }}
       >
-        <Box component="form" onSubmit={handleSubmit} noValidate>
+        <Box
+          component="form"
+          onSubmit={(event) => void handleSubmit(event)}
+          noValidate
+        >
           <Paper elevation={id ? 0 : 5} sx={{ borderRadius: 2, p: 2 }}>
             <Grid container>
               <Zoom in={isWriting}>

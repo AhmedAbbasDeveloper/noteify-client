@@ -97,7 +97,12 @@ export const Register = () => {
           Register
         </Typography>
 
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
+        <Box
+          component="form"
+          onSubmit={(event) => void handleSubmit(event)}
+          noValidate
+          sx={{ mt: 3 }}
+        >
           <Grid container spacing={2}>
             <Grid size={{ xs: 12, sm: 6 }}>
               <FormControl fullWidth>

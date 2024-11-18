@@ -14,17 +14,17 @@ export const Notes = () => {
 
   const [notesError, setNotesError] = useState<string>('');
 
-  const loadNotes = useCallback(async () => {
-    try {
-      await fetchNotes();
-    } catch (error) {
-      setNotesError((error as Error).message);
-    }
-  }, [fetchNotes]);
-
   useEffect(() => {
-    loadNotes();
-  }, [loadNotes]);
+    const loadNotes = async () => {
+      try {
+        await fetchNotes();
+      } catch (error) {
+        setNotesError((error as Error).message);
+      }
+    };
+
+    void loadNotes();
+  }, [fetchNotes]);
 
   const handleCloseErrorAlert = useCallback(() => {
     setNotesError('');

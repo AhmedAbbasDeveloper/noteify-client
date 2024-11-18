@@ -10,7 +10,7 @@ export const Footer = () => (
   >
     <Container maxWidth="sm">
       <Typography variant="body2" align="center">
-        {`Copyright © ${new Date().getFullYear()} Ahmed Abbas`}
+        {`Copyright © ${new Date().getFullYear().toString()} Ahmed Abbas`}
       </Typography>
     </Container>
   </Box>

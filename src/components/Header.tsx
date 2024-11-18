@@ -6,8 +6,6 @@ import { useAuth } from '@/hooks/useAuth';
 export const Header = () => {
   const { isAuthenticated, logout } = useAuth();
 
-  const handleClick = () => isAuthenticated && logout();
-
   return (
     <Box sx={{ pb: 1.25 }}>
       <AppBar position="relative" sx={{ px: 1, py: 0.5 }}>
@@ -35,7 +33,7 @@ export const Header = () => {
               <Button color="inherit">Login</Button>
             </Link>
           ) : (
-            <Button onClick={handleClick} color="inherit">
+            <Button onClick={logout} color="inherit">
               Logout
             </Button>
           )}

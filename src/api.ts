@@ -1,4 +1,8 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
+
+interface ErrorResponse {
+  message?: string;
+}
 
 export const api = axios.create({
   baseURL: 'https://noteify-server.fly.dev',
@@ -7,10 +11,10 @@ export const api = axios.create({
 
 api.interceptors.response.use(
   (response) => response,
-  (error) =>
+  (error: AxiosError<ErrorResponse>) =>
     Promise.reject(
       new Error(
-        error.response?.data?.message || 'An error occurred. Please try again.',
+        error.response?.data.message ?? 'An error occurred. Please try again.',
       ),
     ),
 );

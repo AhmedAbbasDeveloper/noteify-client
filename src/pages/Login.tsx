@@ -86,7 +86,12 @@ export const Login = () => {
           Login
         </Typography>
 
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box
+          component="form"
+          onSubmit={(event) => void handleSubmit(event)}
+          noValidate
+          sx={{ mt: 1 }}
+        >
           <FormControl fullWidth>
             <TextField
               id="email"

@@ -59,9 +59,17 @@ const notesReducer = (state: NotesState, action: NotesAction): NotesState => {
   }
 };
 
-const getAuthHeaders = () => ({
-  Authorization: `Bearer ${localStorage.getItem('noteify-auth')}`,
-});
+const getAuthHeaders = () => {
+  const token = localStorage.getItem('noteify-auth');
+  if (!token) {
+    throw new Error(
+      'Authentication token is missing. Please log out and log back in.',
+    );
+  }
+  return {
+    Authorization: `Bearer ${token}`,
+  };
+};
 
 export const NotesProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();

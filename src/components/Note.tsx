@@ -63,7 +63,12 @@ export const Note = ({ id, title, content }: { id: string } & NoteInput) => {
           <Edit />
         </IconButton>
 
-        <IconButton onClick={handleDelete} color="primary">
+        <IconButton
+          onClick={() => {
+            void handleDelete();
+          }}
+          color="primary"
+        >
           <Delete />
         </IconButton>
       </CardActions>
