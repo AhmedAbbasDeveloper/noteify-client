@@ -1,10 +1,6 @@
 import { Box, CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-import {
-  createBrowserRouter,
-  Navigate,
-  RouterProvider,
-} from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { Footer } from '@/components/Footer';
 import { NotesProvider } from '@/context/notes/NotesProvider';
@@ -17,25 +13,6 @@ import { theme } from '@/theme';
 export const App = () => {
   const { isAuthenticated } = useAuth();
 
-  const router = createBrowserRouter([
-    {
-      path: '/register',
-      element: isAuthenticated ? <Navigate to="/" replace /> : <Register />,
-    },
-    {
-      path: '/login',
-      element: isAuthenticated ? <Navigate to="/" replace /> : <Login />,
-    },
-    {
-      path: '/',
-      element: (
-        <NotesProvider>
-          <Notes />
-        </NotesProvider>
-      ),
-    },
-  ]);
-
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -46,7 +23,30 @@ export const App = () => {
         }}
       >
         <CssBaseline />
-        <RouterProvider router={router} />
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/register"
+              element={
+                !isAuthenticated ? <Register /> : <Navigate to="/" replace />
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                !isAuthenticated ? <Login /> : <Navigate to="/" replace />
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <NotesProvider>
+                  <Notes />
+                </NotesProvider>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
         <Footer />
       </Box>
     </ThemeProvider>

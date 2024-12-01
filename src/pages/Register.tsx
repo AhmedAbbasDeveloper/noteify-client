@@ -71,7 +71,7 @@ export const Register = () => {
     const { firstName, lastName, email, password } = formValues;
     try {
       await register({ firstName, lastName, email, password });
-      navigate('/');
+      await navigate('/');
     } catch (error) {
       setRegisterError((error as Error).message);
     }

@@ -60,7 +60,7 @@ export const Login = () => {
     const { email, password } = formValues;
     try {
       await login({ email, password });
-      navigate('/');
+      await navigate('/');
     } catch (error) {
       setLoginError((error as Error).message);
     }
