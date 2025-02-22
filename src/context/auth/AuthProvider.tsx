@@ -3,6 +3,7 @@ import { FC, ReactNode, useEffect, useReducer } from 'react';
 
 import { api } from '@/api';
 import { AuthState, DecodedToken, LoginInput, RegisterInput } from '@/types';
+
 import { AuthContext } from './AuthContext';
 
 const LOCAL_STORAGE_KEY = 'noteify-auth';

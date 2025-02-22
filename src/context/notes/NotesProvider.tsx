@@ -4,6 +4,7 @@ import { FC, ReactNode, useCallback, useReducer } from 'react';
 import { api } from '@/api';
 import { useAuth } from '@/hooks/useAuth';
 import { Note, NoteInput, NotesState } from '@/types';
+
 import { NotesContext } from './NotesContext';
 
 type NotesAction =
